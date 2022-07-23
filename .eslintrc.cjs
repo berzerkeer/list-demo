@@ -50,7 +50,6 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-unused-vars': 'off',
     'no-undef': process.env.NODE_ENV === 'production' ? 'warn' : 'error',
     'no-unreachable': process.env.NODE_ENV === 'production' ? 'warn' : 'error',
     'prettier/prettier': ['error', { singleQuote: true }],

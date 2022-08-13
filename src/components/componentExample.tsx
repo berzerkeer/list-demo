@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Button, Center, Image, Stack, Text } from '@mantine/core';
 
 import { fetchQuote, fetchCat } from '@/api/randomApi';
 import { IDLE, PENDING, SUCCESS, ERROR } from '@/api/constants/apiStatus';
@@ -134,23 +135,30 @@ function ComponentExample() {
     isFetchQuoteSuccess,
   } = useFetchRandom();
   return (
-    <div>
+    <Stack align='center'>
       <div>
-        {isFetchQuoteIdle ? <p>Welcome</p> : null}
-        {isFetchQuotePending ? <p>Loadig..</p> : null}
-        {isFetchQuoteError ? <p>There was a problem</p> : null}
-        {isFetchQuoteSuccess ? <p>{quote}</p> : null}
+        {isFetchQuoteIdle ? <Text>Welcome</Text> : null}
+        {isFetchQuotePending ? <Text>Loadig..</Text> : null}
+        {isFetchQuoteError ? <Text>There was a problem</Text> : null}
+        {isFetchQuoteSuccess ? <Text>{quote}</Text> : null}
       </div>
       <div>
-        {isFetchCatIdle ? <p>Welcome</p> : null}
-        {isFetchCatPending ? <p>Loadig..</p> : null}
-        {isFetchCatError ? <p>There was a problem</p> : null}
+        {isFetchCatIdle ? <Text>Welcome</Text> : null}
+        {isFetchCatPending ? <Text>Loadig..</Text> : null}
+        {isFetchCatError ? <Text>There was a problem</Text> : null}
         {isFetchCatSuccess ? (
-          <img src={cat} width='250px' height='250px' />
+          <Image
+            alt='With default placeholder'
+            height={280}
+            radius='md'
+            src={cat}
+            width={200}
+            withPlaceholder
+          />
         ) : null}
       </div>
-      <button onClick={fetchRandom}>Fetch Random</button>
-    </div>
+      <Button onClick={fetchRandom}>Fetch Random</Button>
+    </Stack>
   );
 }
 

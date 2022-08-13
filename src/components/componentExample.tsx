@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Center, Image, Stack, Text } from '@mantine/core';
+import { Button, Image, Stack, Text } from '@mantine/core';
 
 import { fetchQuote, fetchCat } from '@/api/randomApi';
 import { IDLE, PENDING, SUCCESS, ERROR } from '@/api/constants/apiStatus';

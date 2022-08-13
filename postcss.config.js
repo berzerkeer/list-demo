@@ -11,6 +11,8 @@ module.exports = {
     require('postcss-import'),
     require('postcss-extend'),
     require('postcss-mixins'),
+    require('postcss-reporter'),
+    require('postcss-nested'),
     require('postcss-preset-env', {
       autoprefixer: {
         flexbox: 'no-2009',
@@ -22,6 +24,5 @@ module.exports = {
       },
     }),
     require('autoprefixer')(),
-    require('postcss-reporter'),
   ],
 };

@@ -1,41 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button, Image, Stack, Text } from '@mantine/core';
 
 import { fetchQuote, fetchCat } from '@/api/randomApi';
-import { IDLE, PENDING, SUCCESS, ERROR } from '@/api/constants/apiStatus';
 
-import { withAsync } from '@/helpers/withAsync';
-import { useApiStatus } from '@/hooks/useApiStatus';
+import { useApi } from '@/hooks/useApi';
 
 import LazySpinner from './lazy-spinner/LazySpinner';
 
 const useFetchQuote = () => {
-  const [quote, setQuote] = useState<string>('');
   const {
-    status: fetchQuoteStatus,
-    setStatus: setFetchQuoteStatus,
+    data: quote,
+    exec: initFetchQuote,
     isIdle: isFetchQuoteIdle,
     isPending: isFetchQuotePending,
     isError: isFetchQuoteError,
     isSuccess: isFetchQuoteSuccess,
-  } = useApiStatus(IDLE);
-
-  const initFetchQuote = async () => {
-    setFetchQuoteStatus(PENDING);
-    const { response, error } = await withAsync(() => fetchQuote());
-
-    if (error) {
-      setFetchQuoteStatus(ERROR);
-      return;
-    } else if (response) {
-      setQuote(response.data.quote);
-      setFetchQuoteStatus(SUCCESS);
-    }
-  };
+  } = useApi(() => fetchQuote().then((response) => response.data?.quote));
 
   return {
     quote,
-    fetchQuoteStatus,
     initFetchQuote,
     isFetchQuoteIdle,
     isFetchQuotePending,
@@ -45,32 +28,17 @@ const useFetchQuote = () => {
 };
 
 const useFetchCat = () => {
-  const [cat, setCat] = useState<string>('');
   const {
-    status: fetchCatStatus,
-    setStatus: setFetchCatStatus,
+    data: cat,
+    exec: initFetchCat,
     isIdle: isFetchCatIdle,
     isPending: isFetchCatPending,
     isError: isFetchCatError,
     isSuccess: isFetchCatSuccess,
-  } = useApiStatus(IDLE);
-
-  const initFetchCat = async () => {
-    setFetchCatStatus(PENDING);
-    const { response, error } = await withAsync(() => fetchCat());
-
-    if (error) {
-      setFetchCatStatus(ERROR);
-      return;
-    } else if (response) {
-      setCat(response.data?.[0].url);
-      setFetchCatStatus(SUCCESS);
-    }
-  };
+  } = useApi(() => fetchCat().then((response) => response.data?.[0].url));
 
   return {
     cat,
-    fetchCatStatus,
     initFetchCat,
     isFetchCatIdle,
     isFetchCatPending,

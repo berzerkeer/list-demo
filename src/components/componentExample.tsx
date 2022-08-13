@@ -7,6 +7,8 @@ import { IDLE, PENDING, SUCCESS, ERROR } from '@/api/constants/apiStatus';
 import { withAsync } from '@/helpers/withAsync';
 import { useApiStatus } from '@/hooks/useApiStatus';
 
+import LazySpinner from './lazy-spinner/LazySpinner';
+
 const useFetchQuote = () => {
   const [quote, setQuote] = useState<string>('');
   const {
@@ -138,13 +140,13 @@ function ComponentExample() {
     <Stack align='center'>
       <div>
         {isFetchQuoteIdle ? <Text>Welcome</Text> : null}
-        {isFetchQuotePending ? <Text>Loadig..</Text> : null}
+        {<LazySpinner show={isFetchQuotePending} delay={400} />}
         {isFetchQuoteError ? <Text>There was a problem</Text> : null}
         {isFetchQuoteSuccess ? <Text>{quote}</Text> : null}
       </div>
       <div>
         {isFetchCatIdle ? <Text>Welcome</Text> : null}
-        {isFetchCatPending ? <Text>Loadig..</Text> : null}
+        {<LazySpinner show={isFetchCatPending} delay={400} />}
         {isFetchCatError ? <Text>There was a problem</Text> : null}
         {isFetchCatSuccess ? (
           <Image

@@ -1,5 +1,6 @@
-import ComponentExample from '@/components/componentExample';
 import { Center, Container, MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
+import SearchMealExample from './components/SearchMealsExample';
 
 function App() {
   return (
@@ -9,9 +10,11 @@ function App() {
         withNormalizeCSS
         theme={{ colorScheme: 'dark' }}
       >
-        <Center style={{ width: '100%', height: '100vh' }}>
-          <ComponentExample />
-        </Center>
+        <NotificationsProvider>
+          <Center style={{ width: '100%', height: '100vh' }}>
+            <SearchMealExample />
+          </Center>
+        </NotificationsProvider>
       </MantineProvider>
     </Container>
   );

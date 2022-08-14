@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Button, Image, Stack, Text } from '@mantine/core';
 
 import { fetchQuote, fetchCat } from '@/api/randomApi';
@@ -65,15 +65,14 @@ const useFetchRandom = () => {
     isFetchCatSuccess,
   } = useFetchCat();
 
-  const fetchRandom = () => {
+  const fetchRandom = useCallback(() => {
     initFetchQuote();
     initFetchCat();
-  };
+  }, [initFetchCat, initFetchQuote]);
 
   useEffect(() => {
     fetchRandom();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchRandom]);
 
   return {
     quote,

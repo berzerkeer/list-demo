@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 // Default config for axios
 const axiosParams: AxiosRequestConfig = {
   baseURL:
-    process.env.NODE_ENV === 'development' ? ' http://127.0.0.1:4173' : '/',
+    process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:4173' : '/',
 };
 
 // Create axios instance

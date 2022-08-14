@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { Canceler } from '@/api/types/api.types';
 import { didAbort } from '@/api/api';
 import { Meal, searchMeals } from '@/api/mealApi';
 import { List, Stack, TextInput } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
+import debounce from '@/helpers/debounce';
 
 type AbortRef = {
   abort?: Canceler;
@@ -29,7 +31,7 @@ const useFetchMeals = () => {
     }
   };
 
-  const fetchMeals = async (searchTerm: string) => {
+  const fetchMeals = useCallback(async (searchTerm: string) => {
     try {
       // Abort the previous request if there was one
       abortRef.current.abort?.();
@@ -43,7 +45,7 @@ const useFetchMeals = () => {
       console.error(error);
       handleQuoteError(error);
     }
-  };
+  }, []);
 
   return {
     meals,
@@ -55,9 +57,11 @@ const SearchMealExample = () => {
   const [query, setQuery] = useState('');
   const { meals, fetchMeals } = useFetchMeals();
 
+  const debouncedFetchMeals = useCallback(debounce(fetchMeals, 400), []);
+
   useEffect(() => {
-    fetchMeals(query);
-  }, [query, fetchMeals]);
+    debouncedFetchMeals(query);
+  }, [query, debouncedFetchMeals]);
 
   return (
     <Stack align='center'>
@@ -66,7 +70,7 @@ const SearchMealExample = () => {
         placeholder='Search meals'
         autoComplete='off'
         value={query}
-        onChange={(e) => setQuery(e.currentTarget.value)}
+        onChange={(event) => setQuery(event.currentTarget.value)}
         label='Search meal'
       />
       <List spacing='xs' size='sm' style={{ textAlign: 'center' }}>

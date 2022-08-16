@@ -1,12 +1,38 @@
-import Fastify, { FastifyInstance } from 'fastify';
+import Fastify, {
+  FastifyInstance,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify';
+import fjwt from '@fastify/jwt';
 import userRoutes from './modules/user/user.route';
 import { userSchemas } from './modules/user/user.schema';
 
-const fastify: FastifyInstance = Fastify({
+export const fastify: FastifyInstance = Fastify({
   logger: {
     level: 'info',
   },
 });
+
+declare module 'fastify' {
+  export interface FastifyInstance {
+    auth: any;
+  }
+}
+
+fastify.register(fjwt, {
+  secret: 'supersecret',
+});
+
+fastify.decorate(
+  'auth',
+  async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      await request.jwtVerify();
+    } catch (error) {
+      return reply.send(error);
+    }
+  }
+);
 
 fastify.get('/healthCheck', async () => {
   return { status: 'ok' };

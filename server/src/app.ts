@@ -4,10 +4,13 @@ import Fastify, {
   FastifyRequest,
 } from 'fastify';
 import fjwt from '@fastify/jwt';
+import swagger from '@fastify/swagger';
+import { withRefResolver } from 'fastify-zod';
 import userRoutes from './modules/user/user.route';
 import { userSchemas } from './modules/user/user.schema';
 import { productSchemas } from './modules/product/product.schema';
 import productRoutes from './modules/product/product.route';
+import { version } from '../package.json';
 
 export const fastify: FastifyInstance = Fastify({
   logger: {
@@ -56,6 +59,22 @@ const start = async () => {
   for (const schema of schemas) {
     fastify.addSchema(schema);
   }
+
+  fastify.register(
+    swagger,
+    withRefResolver({
+      routePrefix: '/docs',
+      exposeRoute: true,
+      staticCSP: true,
+      openapi: {
+        info: {
+          title: 'Fastify API',
+          description: 'Fastify API with TypeScript, Fastify, Zod and Swagger',
+          version,
+        },
+      },
+    })
+  );
 
   fastify.register(userRoutes, { prefix: 'api/users' });
   fastify.register(productRoutes, { prefix: 'api/products' });

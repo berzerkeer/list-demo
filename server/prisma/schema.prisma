@@ -29,3 +29,9 @@ model Product {
   owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   Int
 }
+
+model Quote {
+  id        Int      @default(autoincrement()) @id
+  author    String
+  quote     String
+}

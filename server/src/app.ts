@@ -11,6 +11,8 @@ import { userSchemas } from './modules/user/user.schema';
 import { productSchemas } from './modules/product/product.schema';
 import productRoutes from './modules/product/product.route';
 import { version } from '../package.json';
+import quoteRoutes from './modules/quotes/quotes.routes';
+import { quotesSchemas } from './modules/quotes/quotes.schema';
 
 export const fastify: FastifyInstance = Fastify({
   logger: {
@@ -54,7 +56,7 @@ fastify.get('/healthCheck', async () => {
 });
 
 const start = async () => {
-  const schemas = [...userSchemas, ...productSchemas];
+  const schemas = [...userSchemas, ...productSchemas, ...quotesSchemas];
 
   for (const schema of schemas) {
     fastify.addSchema(schema);
@@ -78,6 +80,7 @@ const start = async () => {
 
   fastify.register(userRoutes, { prefix: 'api/users' });
   fastify.register(productRoutes, { prefix: 'api/products' });
+  fastify.register(quoteRoutes, { prefix: 'api/quotes' });
 
   try {
     await fastify.listen({ port: 3000, host: '0.0.0.0' });

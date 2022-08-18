@@ -7,7 +7,7 @@
     "email": "sangeeth036@proton.me"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"cd server && pnpm dev\"",
     "build": "tsc && vite build",
     "preview": "pnpm build && vite preview",
     "stylelint": "pnpm dlx stylelint \"./**/*.{css,scss,sass}\" --config \"./stylelint.config.js\"",
@@ -47,6 +47,7 @@
     "@typescript-eslint/eslint-plugin": "5.33.0",
     "@typescript-eslint/parser": "5.33.0",
     "@vitejs/plugin-react": "^2.0.1",
+    "concurrently": "^7.3.0",
     "cypress": "^10.4.0",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "8.5.0",

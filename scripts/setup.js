@@ -49,22 +49,22 @@ server.on('spawn', () => {
   note('Installing server-side dependencies...');
 });
 
-client.on('error', (error) => {
+client.on('error', (e) => {
   error('Client installation failed');
-  console.error(error);
+  console.error(e);
 });
 
-server.on('error', (error) => {
+server.on('error', (e) => {
   error('Server installation failed');
-  console.error(error);
+  console.error(e);
 });
 
-client.on('exit', (code) => {
+client.on('exit', () => {
   note('Client-side dependencies installed.');
   clientPromiseResolve();
 });
 
-server.on('exit', (code) => {
+server.on('exit', () => {
   note('Server-side dependencies installed.');
   serverPromiseResolve();
 });

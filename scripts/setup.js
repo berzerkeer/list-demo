@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { spawn } from 'child_process';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { spawn } = require('child_process');
 
 const styles = {
   success: { open: '\u001b[32;1m', close: '\u001b[0m' },
@@ -27,11 +28,10 @@ const server = spawn('cd ./server && pnpm install', {
 });
 
 const createPromise = () => {
-  let promise;
   let resolve;
   let reject;
 
-  promise = new Promise((_resolve, _reject) => {
+  const promise = new Promise((_resolve, _reject) => {
     resolve = _resolve;
     reject = _reject;
   });

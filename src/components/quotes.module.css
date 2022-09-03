@@ -1,0 +1,8 @@
+.quotesContainer {
+  height: 80%;
+  mask-image: linear-gradient(
+    to bottom,
+    black calc(100% - 60px),
+    transparent 100%
+  );
+}

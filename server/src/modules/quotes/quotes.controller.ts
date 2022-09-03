@@ -16,15 +16,15 @@ export const getQuotesHandler = async (
   const { page, cursor } = request.query;
   let quotes;
   if (page) {
-    quotes = await getQuotesByPage(parseInt(page), 5);
-    return quotes;
+    quotes = await getQuotesByPage(parseInt(page), 10);
+    return { quotes, hasMore: false };
   }
   if (cursor) {
-    quotes = await getQuotesByCursor({ id: parseInt(cursor) }, 5);
-    return quotes;
+    quotes = await getQuotesByCursor({ id: parseInt(cursor) }, 10);
+    return { quotes, nextCursor: false };
   }
   quotes = await getQuotes();
-  return quotes;
+  return { quotes };
 };
 
 export const getTopQuotesHandler = async () => {

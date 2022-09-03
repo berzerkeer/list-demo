@@ -15,7 +15,11 @@ const quoteResponseSchema = z.object({
   id: z.number(),
 });
 
-const quotesResponseSchema = z.array(quoteResponseSchema);
+const quotesResponseSchema = z.object({
+  quotes: z.array(quoteResponseSchema),
+  hasMore: z.boolean().optional(),
+  nextCursor: z.boolean().optional(),
+});
 
 const getQuotesSchema = z.object({
   page: z.string().optional(),

@@ -1,22 +1,27 @@
-import { Center, Container, MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
-import SearchMealExample from './components/SearchMealsExample';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import QuoteLayout from './components/QuoteLayout';
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Container>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{ colorScheme: 'dark' }}
-      >
-        <NotificationsProvider>
-          <Center style={{ width: '100%', height: '100vh' }}>
-            <SearchMealExample />
-          </Center>
-        </NotificationsProvider>
-      </MantineProvider>
-    </Container>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      withCSSVariables
+      theme={{
+        colorScheme: 'dark',
+        fontFamily: '"Inter",sans-serif',
+        headings: { fontFamily: '"Inter", sans-serif' },
+      }}
+    >
+      <NotificationsProvider>
+        <QueryClientProvider client={queryClient}>
+          <QuoteLayout />
+        </QueryClientProvider>
+      </NotificationsProvider>
+    </MantineProvider>
   );
 }
 

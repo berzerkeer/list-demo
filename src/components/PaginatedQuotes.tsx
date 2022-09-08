@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { QuoteConfig } from './QuoteLayout';
 import QuotesContainer from './QuotesContainer';
 
+const PAGE_SIZE = 10;
+
 const PaginatedQuotes = (props: Partial<QuoteConfig>) => {
   const { title = '' } = props;
   const [activePage, setActivePage] = useState(1);
@@ -26,8 +28,9 @@ const PaginatedQuotes = (props: Partial<QuoteConfig>) => {
       page={activePage}
       setPage={setActivePage}
       isPreviousData={isPreviousData}
-      isFetching={isFetching}
+      isFetchingNextPage={isFetching}
       withPagination
+      totalPage={data?.count && Math.ceil(data?.count / PAGE_SIZE)}
     />
   );
 };

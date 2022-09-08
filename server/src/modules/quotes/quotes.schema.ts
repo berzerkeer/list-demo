@@ -18,12 +18,14 @@ const quoteResponseSchema = z.object({
 const quotesResponseSchema = z.object({
   quotes: z.array(quoteResponseSchema),
   hasMore: z.boolean().optional(),
-  nextCursor: z.boolean().optional(),
+  nextCursor: z.number().optional(),
+  count: z.number().optional(),
 });
 
 const getQuotesSchema = z.object({
   page: z.string().optional(),
   cursor: z.string().optional(),
+  count: z.number().optional(),
 });
 
 export type CreateQuoteInput = z.infer<typeof createQuoteSchema>;

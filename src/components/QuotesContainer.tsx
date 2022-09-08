@@ -20,11 +20,15 @@ export type QuotesContainerProps = {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
-  isFetching?: boolean;
+  isFetchingNextPage?: boolean;
   isPreviousData?: boolean;
   page?: number;
   setPage?: React.Dispatch<React.SetStateAction<number>>;
   withPagination?: boolean;
+  withInfiniteScroll?: boolean;
+  loadMoreRef?: (node?: Element | null | undefined) => void;
+  hasMore?: boolean;
+  totalPage?: number;
 };
 
 const QuotesContainer = (props: QuotesContainerProps) => {
@@ -34,13 +38,14 @@ const QuotesContainer = (props: QuotesContainerProps) => {
     isLoading,
     isSuccess,
     isError,
+    isFetchingNextPage,
     withPagination,
-    isFetching,
+    withInfiniteScroll,
+    loadMoreRef,
     page,
     setPage,
-    isPreviousData,
+    totalPage,
   } = props;
-  console.log(!isSuccess);
 
   return (
     <Paper
@@ -68,7 +73,9 @@ const QuotesContainer = (props: QuotesContainerProps) => {
         {!isSuccess ? (
           <Center sx={{ height: '100%' }}>
             {isError && <Text>Error fetching data</Text>}
-            {isLoading && <Loader />}
+            {(isLoading || (isFetchingNextPage && withPagination)) && (
+              <Loader />
+            )}
           </Center>
         ) : (
           quotes?.map((quote) => (
@@ -80,10 +87,19 @@ const QuotesContainer = (props: QuotesContainerProps) => {
             </Box>
           ))
         )}
+        {withInfiniteScroll && (
+          <Box ref={loadMoreRef} sx={{ height: '10px' }} />
+        )}
       </ScrollArea>
+      {isFetchingNextPage && withInfiniteScroll ? (
+        <Center>
+          {isError && <Text>Error fetching data</Text>}
+          <Loader />
+        </Center>
+      ) : null}
       {withPagination && (
         <Pagination
-          total={10}
+          total={totalPage ?? 1}
           sx={{ justifyContent: 'center', position: 'sticky' }}
           page={page}
           onChange={setPage}

@@ -20,7 +20,7 @@ const quotesConfig = [
     Component: PaginatedQuotes,
   },
   {
-    title: 'Infinitescroll quotes',
+    title: 'Infinite scroll quotes',
     Component: InfiniteQuotes,
   },
 ];

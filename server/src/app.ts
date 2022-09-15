@@ -5,6 +5,7 @@ import Fastify, {
 } from 'fastify';
 import fjwt from '@fastify/jwt';
 import swagger from '@fastify/swagger';
+import cors from '@fastify/cors';
 import { withRefResolver } from 'fastify-zod';
 import userRoutes from './modules/user/user.route';
 import { userSchemas } from './modules/user/user.schema';
@@ -35,6 +36,8 @@ declare module '@fastify/jwt' {
     };
   }
 }
+
+fastify.register(cors);
 
 fastify.register(fjwt, {
   secret: 'supersecret',

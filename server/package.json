@@ -11,16 +11,17 @@
     "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts"
   },
   "dependencies": {
+    "@fastify/cors": "^8.1.0",
     "@fastify/jwt": "^6.3.2",
     "@fastify/swagger": "^7.4.1",
     "@prisma/client": "^4.2.1",
-    "fastify": "^4.4.0",
+    "fastify": "^4.5.2",
     "fastify-zod": "^1.1.0",
     "zod": "^3.18.0",
     "zod-to-json-schema": "^3.17.1"
   },
   "devDependencies": {
-    "@types/node": "^18.7.4",
+    "@types/node": "^18.7.7",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
   },

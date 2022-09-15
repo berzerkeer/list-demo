@@ -7,21 +7,25 @@ export const getQuotes = async () => {
 };
 
 export const getQuotesByPage = async (page: number, take: number) => {
-  return await prisma.quote.findMany({
+  const count = await prisma.quote.count();
+  const quotes = await prisma.quote.findMany({
     skip: (page - 1) * take,
     take,
   });
+  return { quotes, count };
 };
 
 export const getQuotesByCursor = async (
   cursor: Prisma.QuoteWhereUniqueInput,
   take: number
 ) => {
-  return await prisma.quote.findMany({
+  const total = await prisma.quote.count();
+  const quotes = await prisma.quote.findMany({
     take,
     skip: 1,
     cursor,
   });
+  return { quotes, total };
 };
 
 export const getTopQuotes = async () => {
@@ -31,5 +35,5 @@ export const getTopQuotes = async () => {
 };
 
 export const createQuote = async (data: CreateQuoteInput) => {
-  return await prisma.quote.create({ data });
+  return prisma.quote.create({ data });
 };

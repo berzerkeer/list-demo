@@ -14,22 +14,32 @@ export const getQuotesHandler = async (
   }>
 ) => {
   const { page, cursor } = request.query;
-  let quotes;
+  let lastQueryResultsId = null;
   if (page) {
-    quotes = await getQuotesByPage(parseInt(page), 5);
-    return quotes;
+    const { quotes, count } = await getQuotesByPage(parseInt(page), 10);
+    return { quotes, hasMore: count > parseInt(page) * 10, count };
   }
   if (cursor) {
-    quotes = await getQuotesByCursor({ id: parseInt(cursor) }, 5);
-    return quotes;
+    const { quotes, total } = await getQuotesByCursor(
+      { id: parseInt(cursor) },
+      10
+    );
+    lastQueryResultsId = quotes[quotes.length - 1].id;
+    return {
+      quotes,
+      nextCursor: lastQueryResultsId,
+      hasMore: lastQueryResultsId < total,
+      count: total,
+    };
   }
-  quotes = await getQuotes();
-  return quotes;
+  if (!page && !cursor) {
+    const quotes = await getQuotes();
+    return { quotes };
+  }
 };
 
 export const getTopQuotesHandler = async () => {
-  const quotes = await getTopQuotes();
-  return quotes;
+  return await getTopQuotes();
 };
 
 export const createQuoteHandler = async (
@@ -38,6 +48,5 @@ export const createQuoteHandler = async (
   }>
 ) => {
   const { body } = request;
-  const quote = await createQuote(body);
-  return quote;
+  return await createQuote(body);
 };

@@ -34,7 +34,7 @@ export type QuotesContainerProps = {
 const QuotesContainer = (props: QuotesContainerProps) => {
   const {
     title,
-    quotes,
+    quotes = [],
     isLoading,
     isSuccess,
     isError,
@@ -78,10 +78,12 @@ const QuotesContainer = (props: QuotesContainerProps) => {
             )}
           </Center>
         ) : (
-          quotes?.map((quote) => (
-            <Box key={quote.id}>
-              <Blockquote cite={`- ${quote.author}`}>
-                <Text size={'md'}>{quote.quote}</Text>
+          quotes &&
+          quotes.length > 0 &&
+          quotes?.map?.((quote) => (
+            <Box key={quote?.id}>
+              <Blockquote cite={`- ${quote?.author}`}>
+                <Text size={'md'}>{quote?.quote}</Text>
               </Blockquote>
               <Divider />
             </Box>

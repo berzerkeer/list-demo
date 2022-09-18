@@ -41,7 +41,7 @@ const InfiniteQuotes = (props: Partial<QuoteConfig>) => {
   }, [inView]);
 
   const getCurrentPageQuotes = useCallback(() => {
-    return data?.pages.map((page) => page.quotes).flat();
+    return data?.pages?.map((page) => page.quotes).flat();
   }, [data?.pages]);
 
   return (

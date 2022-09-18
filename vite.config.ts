@@ -25,4 +25,7 @@ export default defineConfig({
     },
     setupFiles: ['./vitest.setup.ts'],
   },
+  build: {
+    sourcemap: true,
+  },
 });

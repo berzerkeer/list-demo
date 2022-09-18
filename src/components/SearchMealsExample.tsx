@@ -74,7 +74,7 @@ const SearchMealExample = () => {
         label='Search meal'
       />
       <List spacing='xs' size='sm' style={{ textAlign: 'center' }}>
-        {meals.map((meal) => (
+        {meals?.map((meal) => (
           <List.Item key={meal.idMeal} style={{ listStyle: 'none' }}>
             {meal.strMeal}
           </List.Item>

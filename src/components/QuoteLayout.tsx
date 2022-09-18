@@ -42,7 +42,7 @@ const QuoteLayout = () => {
       <Divider sx={{ alignSelf: 'stretch' }} />
       <Box p='md'>
         <SimpleGrid cols={3} spacing={'lg'}>
-          {quotesConfig.map((config) => {
+          {quotesConfig?.map((config) => {
             const { Component, ...rest } = config;
             return (
               <Box key={config.title}>

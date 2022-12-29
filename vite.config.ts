@@ -8,7 +8,16 @@ import { fileURLToPath, URL } from 'url';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), eslint(), StylelintPlugin({ fix: true, quiet: false })],
+  plugins: [
+    react(),
+    { ...eslint(), apply: 'build' }, // fail on production build
+    {
+      ...eslint({ failOnError: false, failOnWarning: false }), // don't fail on dev server
+      apply: 'serve',
+      enforce: 'post',
+    },
+    StylelintPlugin({ fix: true, quiet: false }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

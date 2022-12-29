@@ -21,22 +21,24 @@ export type QuotesDataWithCursor = {
 
 export type TopQuotesResponse = Quote[];
 
-export const fetchTopQuotes = () => {
-  return api.get<TopQuotesResponse>('/api/quotes/top').then((res) => res.data);
+export const fetchTopQuotes = async () => {
+  const res = await api.get<TopQuotesResponse>('/api/quotes/top');
+  return res.data;
 };
 
-export const fetchQuotesByPage = (page: number) => {
-  return api
-    .get<QuotesData>('/api/quotes', { params: { page } })
-    .then((res) => res.data);
+export const fetchQuotesByPage = async (page: number) => {
+  const res = await api.get<QuotesData>('/api/quotes', { params: { page } });
+  return res.data;
 };
 
-export const fetchQuotesByCursor = (cursor: number) => {
-  return api
-    .get<QuotesDataWithCursor>('/api/quotes', { params: { cursor } })
-    .then((res) => res.data);
+export const fetchQuotesByCursor = async (cursor: number) => {
+  const res = await api.get<QuotesDataWithCursor>('/api/quotes', {
+    params: { cursor },
+  });
+  return res.data;
 };
 
-export const createQuote = (quote: Omit<Quote, 'id'>) => {
-  return api.post<Quote>('/api/quotes', quote).then((res) => res.data);
+export const createQuote = async (quote: Omit<Quote, 'id'>) => {
+  const res = await api.post<Quote>('/api/quotes', quote);
+  return res.data;
 };
